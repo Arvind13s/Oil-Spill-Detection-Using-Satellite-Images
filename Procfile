@@ -1,0 +1,1 @@
+web: gunicorn backend.oilspill_api:app
