@@ -1,5 +1,6 @@
 Flask
-tensorflow-cpu
+gdown
+tensorflow
 numpy
 Pillow
-gdown
+werkzeug
