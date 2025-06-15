@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Oil Spill Detector</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold"> Oil Spill Detector</h1>
+      <nav class="space-x-4 text-lg">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('info') }}">Info</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="p-8 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-semibold mb-4">About This Project</h2>
+    <p class="mb-4">
+      This project uses deep learning with a pre-trained VGG16 model to detect oil spills from satellite images.
+      Oil spills can be devastating to marine environments, and early detection is crucial. Our system allows users to upload satellite images and get instant predictions using our trained AI model.
+    </p>
+    <p>
+      Developed as part of an academic + real-world use case initiative, this tool combines machine learning with modern web development.
+    </p>
+  </section>
+
+  <footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; 2025 Oil Spill Detection</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Info - Oil Spill Detector</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold"> Oil Spill Detector</h1>
+      <nav class="space-x-4 text-lg flex">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('info') }}">Info</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="p-8 max-w-4xl mx-auto">
+    <h2 class="text-3xl font-semibold mb-4">What is Oil Spill Detection?</h2>
+    <p class="mb-4">
+      Oil spill detection involves analyzing satellite images to identify signs of oil on the surface of oceans. Using AI and deep learning models, we can automate this detection to improve response times and reduce environmental damage.
+    </p>
+    <h3 class="text-2xl font-semibold mt-6 mb-2">How Our Model Works</h3>
+    <p>
+      We use a pre-trained VGG16 CNN model fine-tuned on a labeled dataset of oil spill vs. clean ocean images. The image is resized, normalized, and passed through the model to classify it.
+    </p>
+  </section>
+
+  <footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; 2025 Oil Spill Detection</p>
+  </footer>
+</body>
+</html>

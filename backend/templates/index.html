@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Oil Spill Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <nav>
+    <h1>Oil Spill Detector</h1>
+    <ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li>
+      <li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      <li><a href="{{ url_for('info') }}">Info</a></li>
+    </ul>
+    <button class="toggle-btn" type="button" onclick="toggleMode()">Toggle Theme</button>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Satellite-Based Oil Spill Detection</h2>
+      <p>Upload a satellite image to detect oil spills using AI</p>
+    </div>
+  </section>
+
+  <section class="carousel-section">
+    <div class="carousel-container">
+      <div class="carousel">
+        <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Oil spill 1" />
+        <img src="{{ url_for('static', filename='images/slide2.jpg') }}" alt="Oil spill 2" />
+        <img src="{{ url_for('static', filename='images/slide3.jpg') }}" alt="Oil spill 3" />
+        <img src="{{ url_for('static', filename='images/slide4.jpg') }}" alt="Oil spill 4" />
+        <img src="{{ url_for('static', filename='images/slide5.jpg') }}" alt="Oil spill 5" />
+        <!-- Duplicate for seamless loop -->
+        <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Oil spill 1" />
+        <img src="{{ url_for('static', filename='images/slide2.jpg') }}" alt="Oil spill 2" />
+        <img src="{{ url_for('static', filename='images/slide3.jpg') }}" alt="Oil spill 3" />
+        <img src="{{ url_for('static', filename='images/slide4.jpg') }}" alt="Oil spill 4" />
+        <img src="{{ url_for('static', filename='images/slide5.jpg') }}" alt="Oil spill 5" />
+      </div>
+    </div>
+  </section>
+
+  <section class="upload-section">
+    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="{{ url_for('predict') }}">
+      <label class="upload-label">Upload Image:</label>
+      <div class="preview" id="previewBox">
+        <img id="preview-img" src="" alt="" style="display:none;" />
+      </div>
+      <input type="file" id="fileInput" name="file" accept="image/*" onchange="previewImage(event)" required />
+      <button type="submit" class="btn">Detect Oil Spill</button>
+    </form>
+    {% if result %}
+      <div class="result-outer-container">
+        <img src="{{ image_path }}" alt="Uploaded Result Image" class="result-img"/>
+        <div class="result-box">
+          <p><strong>{{ result }}</strong></p>
+        </div>
+        <a href="{{ url_for('home') }}" class="btn back-btn">← Go Back</a>
+      </div>
+    {% endif %}
+  </section>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

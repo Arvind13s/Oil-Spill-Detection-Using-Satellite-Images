@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Oil Spill Detector</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+  <header class="bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center p-4">
+      <h1 class="text-2xl font-bold"> Oil Spill Detector</h1>
+      <nav class="space-x-4 text-lg">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('about') }}">About</a>
+        <a href="{{ url_for('info') }}">Info</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="p-8 max-w-2xl mx-auto">
+    <h2 class="text-3xl font-semibold mb-6">Contact Us</h2>
+    <p class="mb-4">Have questions or feedback? Reach out to us below.</p>
+    <form class="space-y-4">
+      <input type="text" placeholder="Your Name" class="w-full p-2 border rounded"/>
+      <input type="email" placeholder="Your Email" class="w-full p-2 border rounded"/>
+      <textarea placeholder="Your Message" class="w-full p-2 border rounded" rows="5"></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Send Message</button>
+    </form>
+  </section>
+
+  <footer class="bg-gray-800 text-white text-center py-4">
+    <p>&copy; 2025 Oil Spill Detection</p>
+  </footer>
+</body>
+</html>
