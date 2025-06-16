@@ -99,4 +99,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [VGG16](https://arxiv.org/abs/1409.1556) - The pre-trained model architecture
 
 Developed by:  
-[Arvind Singh]
+Arvind Singh
