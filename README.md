@@ -2,7 +2,7 @@
 title: Oil Spill Detection
 emoji: 🌊
 colorFrom: blue
-colorTo: aqua
+colorTo: green
 sdk: docker
 pinned: false
 ---
