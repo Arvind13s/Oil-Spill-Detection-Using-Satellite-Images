@@ -36,17 +36,6 @@ The core model file (`model.h5`) is **not included** in this repository due to i
    git clone [https://github.com/Arvind13s/oil-spill-detection.git](https://github.com/Arvind13s/oil-spill-detection.git)
    cd oil-spill-detection-using-satellite-images
 
-# Oil Spill Detection Using Satellite Images
-
-This project is a web application that uses deep learning to detect oil spills from satellite images. Users can upload satellite images, and the system predicts whether an oil spill is present using a pre-trained AI model.
-
-## Features
-
-- Upload satellite images for oil spill detection
-- Instant AI-based prediction using a trained VGG16 model
-- User-friendly web interface built with Flask
-- Responsive design for desktop and mobile
-- Informational pages: About, Contact, Info
 
 ## Getting Started
 
