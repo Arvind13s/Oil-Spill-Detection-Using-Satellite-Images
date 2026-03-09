@@ -1,13 +1,11 @@
-services:
-  - type: web
-    name: oil-spill-detection
-    env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python backend/app.py
-    plan: free
-    envVars:
-      - key: PORT
-        value: 10000
+---
+title: Oil Spill Detection
+emoji: 🌊
+colorFrom: blue
+colorTo: aqua
+sdk: docker
+pinned: false
+---
 
 # Oil Spill Detection Using Satellite Images
 
