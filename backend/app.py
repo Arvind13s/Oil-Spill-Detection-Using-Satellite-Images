@@ -21,7 +21,7 @@ app = Flask(__name__)
 
 # Model configuration
 MODEL_PATH = "model.h5"
-GOOGLE_DRIVE_ID = "149IVm9HlsDSzJcir9dYWqkmQAMd_IUdB"
+GOOGLE_DRIVE_ID = "115AGZrEjY0s-upS4x1RLEifLjzTRSxm8"
 
 def download_model():
     import gdown
