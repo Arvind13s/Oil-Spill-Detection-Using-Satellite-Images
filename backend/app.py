@@ -7,17 +7,15 @@ import logging
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from werkzeug.utils import secure_filename
-# from flask_cors import CORS  # Uncomment this line if using CORS
 import gdown
 
-# Ensure console supports UTF-8
 sys.stdout.reconfigure(encoding='utf-8')
 
-# Configure logging
+
 logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
-# CORS(app)  # Uncomment this line if frontend is separate and you need CORS
+
 
 # Model configuration
 MODEL_PATH = "model.h5"
