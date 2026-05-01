@@ -23,7 +23,7 @@ GOOGLE_DRIVE_ID = "1hJzPeYvT0FfBbwLSyMlNIAEL4GyqoTAd"
 
 def download_model():
     import gdown
-    url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
+    url = f"https://drive.google.com/file/d/{GOOGLE_DRIVE_ID}"
     gdown.download(url, MODEL_PATH, quiet=False)
 
 if not os.path.exists(MODEL_PATH):
