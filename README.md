@@ -26,7 +26,7 @@ This project is a web application that uses deep learning to detect oil spills f
 * pip
 
 ### Model File Note
-The core model file (`model.h5`) is **not included** in this repository due to its large size. It will be **automatically downloaded from Google Drive** when you run the app for the first time. 
+The core model file (`model.keras`) is **not included** in this repository due to its large size. It will be **automatically downloaded from Google Drive** when you run the app for the first time. 
 * [View Google Drive Model Link](https://drive.google.com/file/d/150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing)
 
 ### Local Installation
@@ -70,7 +70,7 @@ OIL-SPILL-DETECTION-USING-SATELLITE-IMAGES/
 ├── backend/
 │   ├── app.py
 │   └── model/
-│       └── oilspill_model.h5 (downloaded automatically)
+│       └── oilspill_model.keras (downloaded automatically)
 ├── static/
 │   ├── images/
 │   ├── uploads/
