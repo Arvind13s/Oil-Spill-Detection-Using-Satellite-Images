@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 
 # Model configuration
-MODEL_PATH = "oilspill_model.keras"
+MODEL_PATH = "model.keras"
 
 
 def download_model():
