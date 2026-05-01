@@ -18,7 +18,7 @@ app = Flask(__name__)
 
 
 # Model configuration
-MODEL_PATH = "model.keras"
+MODEL_PATH = "oilspill_model.keras"
 GOOGLE_DRIVE_ID = "1hJzPeYvT0FfBbwLSyMlNIAEL4GyqoTAd"
 
 def download_model():
