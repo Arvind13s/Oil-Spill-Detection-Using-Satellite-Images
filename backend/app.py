@@ -19,11 +19,11 @@ app = Flask(__name__)
 
 # Model configuration
 MODEL_PATH = "oilspill_model.keras"
-GOOGLE_DRIVE_ID = "150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing"
+
 
 def download_model():
     import gdown
-    url = f"https://drive.google.com/uc?id={GOOGLE_DRIVE_ID}"
+    url = f"https://drive.google.com/file/d/150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing"
     gdown.download(url, MODEL_PATH, quiet=False)
 
 if not os.path.exists(MODEL_PATH):
