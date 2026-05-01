@@ -27,7 +27,7 @@ This project is a web application that uses deep learning to detect oil spills f
 
 ### Model File Note
 The core model file (`model.h5`) is **not included** in this repository due to its large size. It will be **automatically downloaded from Google Drive** when you run the app for the first time. 
-* [View Google Drive Model Link](https://drive.google.com/file/d/115AGZrEjY0s-upS4x1RLEifLjzTRSxm8/view?usp=sharing)
+* [View Google Drive Model Link](https://drive.google.com/file/d/150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing)
 
 ### Local Installation
 
