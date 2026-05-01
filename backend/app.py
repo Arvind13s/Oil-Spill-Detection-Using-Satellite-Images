@@ -18,8 +18,8 @@ app = Flask(__name__)
 
 
 # Model configuration
-MODEL_PATH = "model.h5"
-GOOGLE_DRIVE_ID = "115AGZrEjY0s-upS4x1RLEifLjzTRSxm8"
+MODEL_PATH = "model.keras"
+GOOGLE_DRIVE_ID = "1hJzPeYvT0FfBbwLSyMlNIAEL4GyqoTAd"
 
 def download_model():
     import gdown
