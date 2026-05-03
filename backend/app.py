@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, jsonify
 import os
 import sys
 import uuid
+import json
 import numpy as np
 import logging
 from tensorflow.keras.models import load_model
@@ -35,8 +36,73 @@ else:
 
 # Load model
 logging.info(f"Loading model from: {MODEL_PATH}")
+
+def load_model_safe(model_path):
+    """
+    Load model with workaround for quantization_config compatibility issues.
+    Removes unsupported quantization_config from layer configs before loading.
+    """
+    try:
+        # Try direct load first
+        return load_model(model_path, compile=False)
+    except (ValueError, TypeError) as e:
+        if "quantization_config" in str(e):
+            logging.warning("quantization_config compatibility issue detected. Attempting workaround...")
+            # Load and strip quantization_config from model config
+            import zipfile
+            import tempfile
+            import shutil
+            
+            with tempfile.TemporaryDirectory() as tmpdir:
+                # Extract keras model (it's a zip file)
+                with zipfile.ZipFile(model_path, 'r') as zip_ref:
+                    zip_ref.extractall(tmpdir)
+                
+                # Read config.json
+                config_path = os.path.join(tmpdir, 'config.json')
+                with open(config_path, 'r') as f:
+                    config = json.load(f)
+                
+                # Recursively remove quantization_config from all layers
+                def remove_quantization_config(obj):
+                    if isinstance(obj, dict):
+                        if 'quantization_config' in obj:
+                            del obj['quantization_config']
+                        for v in obj.values():
+                            remove_quantization_config(v)
+                    elif isinstance(obj, list):
+                        for item in obj:
+                            remove_quantization_config(item)
+                
+                remove_quantization_config(config)
+                
+                # Write back modified config
+                with open(config_path, 'w') as f:
+                    json.dump(config, f)
+                
+                # Create new zip file
+                temp_model_path = model_path + '.tmp'
+                with zipfile.ZipFile(temp_model_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                    for root, dirs, files in os.walk(tmpdir):
+                        for file in files:
+                            file_path = os.path.join(root, file)
+                            arcname = os.path.relpath(file_path, tmpdir)
+                            zipf.write(file_path, arcname)
+                
+                # Load from temp file
+                model = load_model(temp_model_path, compile=False)
+                
+                # Replace original with cleaned version
+                os.remove(model_path)
+                os.rename(temp_model_path, model_path)
+                
+                return model
+        else:
+            raise
+
 try:
-    model = load_model(MODEL_PATH, compile=False)
+    model = load_model_safe(MODEL_PATH)
+    logging.info("Model loaded successfully")
 except Exception as e:
     logging.error(f"Error loading model: {e}")
     raise

@@ -1,6 +1,6 @@
 Flask
 gdown
-tensorflow
+tensorflow==2.17.0
 numpy
 Pillow
 werkzeug
