@@ -22,28 +22,49 @@ This project is a web application that uses deep learning to detect oil spills f
 ##  Getting Started
 
 ### Prerequisites
-* Python 3.7+
-* pip
+- Python 3.8+ (recommended)
+- pip
 
-### Model File Note
-The core model file (`model.keras`) is **not included** in this repository due to its large size. It will be **automatically downloaded from Google Drive** when you run the app for the first time. 
-* [View Google Drive Model Link](https://drive.google.com/file/d/150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing)
+### Model file
+The model file (`model.keras`) is not included in the repo because it is large. The application will download it automatically the first time you run the app. The model is hosted on Google Drive (file id: `150jSgmb08L2TujU5RSXxDkV32yqa1v3u`).
 
-### Local Installation
+Notes about formats and compatibility:
+- The app has been updated to use `gdown` with the `uc?id=` download URL.
+- The code loads the model with `compile=False` to avoid deserialization issues for some build/optimizer configs.
+- `requirements.txt` pins `tensorflow==2.16.0` which is known to work with the provided `.keras` model file.
 
-1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/Arvind13s/oil-spill-detection.git](https://github.com/Arvind13s/oil-spill-detection.git)
-   cd oil-spill-detection-using-satellite-images
-Install the required packages:
+### Local installation and run (recommended)
 
-Bash
+1. Create and activate a virtual environment (Windows PowerShell):
+
+```powershell
+python -m venv venv
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+& .\venv\Scripts\Activate.ps1
+```
+
+2. Install Python dependencies:
+
+```powershell
+pip install --upgrade pip
 pip install -r requirements.txt
-Run the Flask app:
+```
 
-Bash
-python backend/app.py
-Note: On the first run, the app will automatically download the model file from Google Drive. Locally, the app will typically be accessible at http://127.0.0.1:5000/.
+3. Run the app from the `backend` directory so the model is downloaded into that working directory:
+
+```powershell
+cd backend
+python app.py
+```
+
+On first run the app will download `model.keras` into the current directory and then load it. If you updated the model file on Google Drive and want to force a fresh download, remove the local `model.keras` first:
+
+```powershell
+del model.keras
+python app.py
+```
+
+The web UI will be available at `http://127.0.0.1:5000/` by default.
 
 ## Usage
 Navigate to the homepage of the web application.

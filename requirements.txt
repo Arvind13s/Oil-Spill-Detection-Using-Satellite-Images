@@ -1,7 +1,6 @@
 Flask
 gdown
-tensorflow==2.15.0
-keras==2.15.0
+tensorflow
 numpy
 Pillow
 werkzeug

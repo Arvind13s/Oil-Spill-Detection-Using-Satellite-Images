@@ -23,7 +23,8 @@ MODEL_PATH = "model.keras"
 
 def download_model():
     import gdown
-    url = f"https://drive.google.com/file/d/150jSgmb08L2TujU5RSXxDkV32yqa1v3u/view?usp=sharing"
+    file_id = "150jSgmb08L2TujU5RSXxDkV32yqa1v3u"
+    url = f"https://drive.google.com/uc?id={file_id}"
     gdown.download(url, MODEL_PATH, quiet=False)
 
 if not os.path.exists(MODEL_PATH):
@@ -34,7 +35,11 @@ else:
 
 # Load model
 logging.info(f"Loading model from: {MODEL_PATH}")
-model = load_model(MODEL_PATH)
+try:
+    model = load_model(MODEL_PATH, compile=False)
+except Exception as e:
+    logging.error(f"Error loading model: {e}")
+    raise
 
 # Upload folder
 UPLOAD_FOLDER = os.path.join('backend', 'static', 'uploads')
@@ -54,7 +59,9 @@ def predict_image(img_path):
     prediction = model.predict(img_tensor)
     result = prediction[0][0]
     logging.info(f"Prediction confidence: {result}")
-    return 'Oil Spill Detected' if result > 0.5 else 'No Oil Spill Detected'
+    label = 'Oil Spill Detected' if result > 0.5 else 'No Oil Spill Detected'
+    confidence = float(result * 100) if result > 0.5 else float((1 - result) * 100)
+    return label, confidence
 
 @app.route('/')
 def home():
@@ -88,13 +95,13 @@ def predict():
         filepath = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(filepath)
 
-        result = predict_image(filepath)
+        result, confidence = predict_image(filepath)
         image_url = url_for('static', filename='uploads/' + filename)
 
         # If using JS to display result, use this:
-        # return jsonify({'image_path': image_url, 'result': result})
+        # return jsonify({'image_path': image_url, 'result': result, 'confidence': confidence})
 
-        return render_template('result.html', image_path=image_url, result=result)
+        return render_template('result.html', image_path=image_url, result=result, confidence=confidence)
 
     logging.warning("Invalid file type.")
     return redirect(url_for('home'))
