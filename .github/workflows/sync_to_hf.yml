@@ -14,4 +14,4 @@ jobs:
       - name: Push to hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push --force https://Arvind13s:$HF_TOKEN@huggingface.co/spaces/Arvind13s/oil-spill-detection-using-satellite-images main
+        run: git push --force https://Arvind13s:$HF_TOKEN@huggingface.co/spaces/Arvind13s/YOUR-NEW-SPACE-NAME main
