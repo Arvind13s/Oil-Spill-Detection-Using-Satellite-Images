@@ -19,12 +19,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the project files with the correct ownership
 COPY --chown=user:user . .
 
-# Ensure the model directory exists so the app can download and save the .h5 file without errors
-RUN mkdir -p backend/model
+# Create uploads directory for processed images
+RUN mkdir -p backend/static/uploads
 
-# Expose the mandatory port for Hugging Face
-EXPOSE 7860
-ENV PORT=7860
+# Expose the port (defaults to 7860 for Hugging Face, can be overridden)
+ARG PORT=7860
+EXPOSE ${PORT}
+ENV PORT=${PORT}
 
 # Command to launch the Flask app from the root directory
 CMD ["python", "backend/app.py"]

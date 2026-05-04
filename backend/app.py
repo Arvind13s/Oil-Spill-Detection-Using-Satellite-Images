@@ -117,8 +117,8 @@ except Exception as e:
         "If the issue persists, ensure model.keras is properly formatted or try re-uploading to Google Drive."
     )
 
-# Upload folder
-UPLOAD_FOLDER = os.path.join('backend', 'static', 'uploads')
+# Upload folder (app.py runs from backend directory)
+UPLOAD_FOLDER = os.path.join('static', 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
