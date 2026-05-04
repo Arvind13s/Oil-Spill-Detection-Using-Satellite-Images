@@ -48,11 +48,10 @@ def load_model_safe(model_path):
     except (ValueError, TypeError) as e:
         if "quantization_config" in str(e):
             logging.warning("quantization_config compatibility issue detected. Attempting workaround...")
-            # Load and strip quantization_config from model config
             import zipfile
             import tempfile
-            import shutil
             
+            # Extract, clean config, and repack as .keras
             with tempfile.TemporaryDirectory() as tmpdir:
                 # Extract keras model (it's a zip file)
                 with zipfile.ZipFile(model_path, 'r') as zip_ref:
@@ -80,23 +79,30 @@ def load_model_safe(model_path):
                 with open(config_path, 'w') as f:
                     json.dump(config, f)
                 
-                # Create new zip file
-                temp_model_path = model_path + '.tmp'
-                with zipfile.ZipFile(temp_model_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
-                    for root, dirs, files in os.walk(tmpdir):
-                        for file in files:
-                            file_path = os.path.join(root, file)
-                            arcname = os.path.relpath(file_path, tmpdir)
-                            zipf.write(file_path, arcname)
+                # Create backup and repack as .keras file
+                backup_path = model_path + '.bak'
+                os.rename(model_path, backup_path)
                 
-                # Load from temp file
-                model = load_model(temp_model_path, compile=False)
-                
-                # Replace original with cleaned version
-                os.remove(model_path)
-                os.rename(temp_model_path, model_path)
-                
-                return model
+                try:
+                    # Create cleaned .keras file
+                    with zipfile.ZipFile(model_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
+                        for root, dirs, files in os.walk(tmpdir):
+                            for file in files:
+                                file_path = os.path.join(root, file)
+                                arcname = os.path.relpath(file_path, tmpdir)
+                                zipf.write(file_path, arcname)
+                    
+                    # Load from cleaned file
+                    model = load_model(model_path, compile=False)
+                    logging.info("Model cleaned and loaded successfully")
+                    
+                    # Remove backup
+                    os.remove(backup_path)
+                    return model
+                except Exception as load_err:
+                    # Restore backup if cleaning failed
+                    os.rename(backup_path, model_path)
+                    raise load_err
         else:
             raise
 
@@ -104,23 +110,12 @@ try:
     model = load_model_safe(MODEL_PATH)
     logging.info("Model loaded successfully")
 except Exception as e:
-    # Handle common Keras format errors with a helpful message
     msg = str(e)
     logging.error(f"Error loading model: {msg}")
-    if 'File format not supported' in msg or 'Unrecognized keyword arguments passed to Dense' in msg:
-        raise RuntimeError(
-            "Model deserialization failed due to format/version incompatibility. "
-            "Recommended fixes:\n"
-            "1) Convert the model to HDF5 (.h5) on a machine that can load it, then upload the .h5 to your model host.\n"
-            "   Example (local machine where the model loads):\n"
-            "     from tensorflow.keras.models import load_model\n"
-            "     m = load_model('model.keras', compile=False)\n"
-            "     m.save('model.h5')\n"
-            "   Update your deployed app to use model.h5 or replace the Drive file.\n"
-            "2) Ensure the deployment environment uses a matching TensorFlow/Keras version that the model was saved with.\n"
-            "If you want, I can help convert the model locally if you provide an environment where it loads."
-        )
-    raise
+    raise RuntimeError(
+        f"Failed to load model: {msg}\n"
+        "If the issue persists, ensure model.keras is properly formatted or try re-uploading to Google Drive."
+    )
 
 # Upload folder
 UPLOAD_FOLDER = os.path.join('backend', 'static', 'uploads')
