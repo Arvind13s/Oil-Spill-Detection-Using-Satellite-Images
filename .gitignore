@@ -34,6 +34,8 @@ Thumbs.db
 *.pt
 *.pb
 *.onnx
+model.keras
+backend/model.keras
 
 # Images (optional, if you don't want to track raw images)
 *.jpg

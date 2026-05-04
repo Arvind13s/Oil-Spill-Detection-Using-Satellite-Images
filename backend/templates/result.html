@@ -1,21 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <title>Prediction Result</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <title>Detection Result — OilSpill AI</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
 </head>
+
 <body class="result-body">
+  <div class="particles"></div>
 
   <div class="result-center-container">
-    <h1 class="result-title">Prediction Result</h1>
-    <img src="{{ image_path }}" alt="Uploaded Image" class="result-image" />
-    <div class="result-frame">
-      <p class="result-text">{{ result }}</p>
+    <h1 class="result-title">🔬 Detection Result</h1>
+    <img src="{{ image_path }}" alt="Analyzed satellite image" class="result-image" />
+
+    {% if result == 'Oil Spill Detected' %}
+    <div class="result-frame spill">
+      <p>🛢️ {{ result }}</p>
     </div>
-    <a href="/" class="btn back-btn">← Go Back</a>
+    {% else %}
+    <div class="result-frame no-spill">
+      <p>🌊 {{ result }}</p>
+    </div>
+    {% endif %}
+
+    {% if confidence is defined and confidence is not none %}
+    <div class="confidence-bar">
+      <div class="confidence-label">
+        <span>Confidence</span>
+        <span>{{ "%.1f"|format(confidence) }}%</span>
+      </div>
+      <div class="confidence-track">
+        <div class="confidence-fill" id="confidenceFill" data-value="{{ confidence }}"></div>
+      </div>
+    </div>
+    {% endif %}
+
+    <a href="{{ url_for('home') }}" class="back-btn">← Analyze Another Image</a>
   </div>
 
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  <script>
+    var fill = document.getElementById('confidenceFill');
+    if (fill) fill.style.width = fill.dataset.value + '%';
+  </script>
 </body>
+
 </html>

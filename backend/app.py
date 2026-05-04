@@ -104,7 +104,22 @@ try:
     model = load_model_safe(MODEL_PATH)
     logging.info("Model loaded successfully")
 except Exception as e:
-    logging.error(f"Error loading model: {e}")
+    # Handle common Keras format errors with a helpful message
+    msg = str(e)
+    logging.error(f"Error loading model: {msg}")
+    if 'File format not supported' in msg or 'Unrecognized keyword arguments passed to Dense' in msg:
+        raise RuntimeError(
+            "Model deserialization failed due to format/version incompatibility. "
+            "Recommended fixes:\n"
+            "1) Convert the model to HDF5 (.h5) on a machine that can load it, then upload the .h5 to your model host.\n"
+            "   Example (local machine where the model loads):\n"
+            "     from tensorflow.keras.models import load_model\n"
+            "     m = load_model('model.keras', compile=False)\n"
+            "     m.save('model.h5')\n"
+            "   Update your deployed app to use model.h5 or replace the Drive file.\n"
+            "2) Ensure the deployment environment uses a matching TensorFlow/Keras version that the model was saved with.\n"
+            "If you want, I can help convert the model locally if you provide an environment where it loads."
+        )
     raise
 
 # Upload folder
